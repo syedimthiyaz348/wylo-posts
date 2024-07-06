@@ -21,15 +21,15 @@ app.post("/addpost", async (req, res) => {
       if (req.body.content) {
         let postData = await posts(req.body);
         let result = await postData.save();
-        res.send(`Added New Post: ${result.title}`);
+        res.send({message : `Added New Post: ${result.title}`});
       } else {
-        res.send("Please Add Content");
+        res.send({error_msg: "Please Add Content"});
       }
     } else {
-      res.send("Please Add Title");
+      res.send({error_msg: "Please Add Title"});
     }
   } else {
-    res.send("Enter Data To Modify");
+    res.send({error_msg: "Enter Data To Modify"});
   }
 });
 
@@ -40,12 +40,12 @@ app.put("/post/:id", async (req, res) => {
           $set: req.body,
         }
       );
-      res.send(`Your Post Modified Successfully`);
+      res.send({message: "Your Post Modified Successfully"});
 });
 
 app.delete('/delete/:id', async (req, res) => {
     let requestedPost = await posts.deleteOne({_id: req.params.id})
-    res.send(`Deleted Successfully with id: ${req.params.id}`)
+    res.send({message : `Deleted Successfully with id: ${req.params.id}`})
 })
 
 app.listen(3001, (req, res) => {
