@@ -6,6 +6,10 @@ require("./mongo");
 const cors = require('cors');
 app.use(cors());
 
+app.get('/', (req, res) => {
+  res.send("<h1>Posts</h1>")
+})
+
 app.get("/postsdata", async (req, res) => {
   let postsdata = await posts.find({});
   res.send(postsdata);
